@@ -1,24 +1,36 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
 import styles from './Styles'
+import { useNavigation } from '@react-navigation/core'
 
-export default function ChatRoomItem() {
+export default function ChatRoomItem({ chatRoom }) {
+
+    const navigation = useNavigation();
+
+    const onPress = () => {
+        navigation.navigate('ChatRoom', { id: chatRoom.id });
+    }
     return (
-        <View style={styles.container}>
+        <Pressable 
+            style={styles.container}
+            onPress={onPress}
+        >
             <Image 
-                source= {{uri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/elon.png'}} 
+                source= {{uri: chatRoom.users[1].imageUri}} 
                 style={styles.image}
             />
-            <View style={styles.badgeContainer}>
-                <Text style={styles.badgeText}>4</Text>
-            </View>
+
+            {chatRoom.newMessages > 0 ? <View style={styles.badgeContainer}>
+                <Text style={styles.badgeText}>{chatRoom.newMessages}</Text>
+            </View> : null}
+
             <View style={styles.rightContainer}>
                 <View style={styles.row}>
-                    <Text style={styles.name}>Elon Musk</Text>
-                    <Text style={styles.text}>11:00 PM</Text>
+                    <Text style={styles.name}>{chatRoom.users[1].name}</Text>
+                    <Text style={styles.text}>{chatRoom.lastMessage.createdAt}</Text>
                 </View>
-                <Text numberOfLines={1} style={styles.text}>Mamma Mia Hola Coca jfadsklfjaklf jfaskld fjaklfj </Text>
+                <Text numberOfLines={1} style={styles.text}>{chatRoom.lastMessage.content}</Text>
             </View>
-        </View>
+        </Pressable>
     );
 }

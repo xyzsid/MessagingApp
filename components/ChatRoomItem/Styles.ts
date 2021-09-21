@@ -7,9 +7,9 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   badgeContainer: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
+    width: 25,
+    height: 25,
+    borderRadius: 12.5,
     borderWidth: 1,
     borderColor: 'white',
     backgroundColor: '#3872E9',
